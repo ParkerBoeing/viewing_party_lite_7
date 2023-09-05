@@ -1,7 +1,15 @@
   <%= form_with model: @user, local: true do |f| %>  
     <p><%= f.label :name, 'Name:' %></p>
-    <p><%=  f.text_field :name%></p>
+    <p><%= f.text_field :name%></p>
+
     <p><%= f.label :email, 'Email:' %></p>
-    <p><%=  f.text_field :email%></p> 
+    <p><%= f.text_field :email%></p> 
+
+    <p><%= f.label :password, 'Password:' %></p>
+    <p><%= f.password_field :password%></p> 
+
+    <p><%= f.label :confirm_password, 'Confirm Password:' %></p>
+    <p><%= f.password_field :confirm_password%></p> 
+
     <p><%= f.submit "Register" %></p>
   <% end %>

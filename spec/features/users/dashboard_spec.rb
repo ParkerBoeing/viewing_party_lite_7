@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "User Dashboard" do
   describe "user dashboard show" do
     before do
-      @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com")
-      @user2 = User.create!(name: "Vincent", email: "VincentVega@gmail.com")
+      @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com", password: "password1")
+      @user2 = User.create!(name: "Vincent", email: "VincentVega@gmail.com", password: "password2")
       @viewing_party1 = @user1.viewing_parties.create!(name: "Marvin's Pulp Fiction Party", movie_title: "Pulp Fiction", host: "Marvin", event_date: "2023-08-28", start_time: "1:00 AM" )
       @viewing_party2 = @user2.viewing_parties.create!(name: "Vincent's 5 Dollar Shake Party", movie_title: "Shake it", host: "Vincent", event_date: "2023-08-29", start_time: "2:00 PM" )
       @viewing_party3 = @user2.viewing_parties.create!(name: "Butch's Watch Polishing Party", movie_title: "Watches a Documentary", host: "Vincent", event_date: "2023-08-23", start_time: "3:00 AM" )
@@ -75,10 +75,10 @@ RSpec.describe "User Dashboard" do
 
   describe "Movie poster image links" do
     it "displays a movie poster image for each viewing party", :vcr do
-      @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com")
-      @user_2 = User.create!(name: "User2", email: "email2@example.com")
-      @user_3 = User.create!(name: "User3", email: "email3@example.com")
-      @user_4 = User.create!(name: "User4", email: "email4@example.com")
+      @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com", password: "password1")
+      @user_2 = User.create!(name: "User2", email: "email2@example.com", password: "password2")
+      @user_3 = User.create!(name: "User3", email: "email3@example.com", password: "password3")
+      @user_4 = User.create!(name: "User4", email: "email4@example.com", password: "password4")
       visit user_path(@user1)
       expect(page).to_not have_selector("img[alt='Movie poster']")
       expect(page).to_not have_selector("img")

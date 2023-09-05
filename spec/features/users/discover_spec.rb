@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Discover Movies" do
   before do
-    @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com")
+    @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com", password: "password1")
     @viewing_party1 = @user1.viewing_parties.create!(name: "Marvin's Pulp Fiction Party", movie_title: "Pulp Fiction", host: "Marvin", event_date: "8/22/23", start_time: "1" )
   end
 

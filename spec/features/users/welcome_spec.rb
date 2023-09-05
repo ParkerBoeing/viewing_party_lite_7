@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'User welcome' do
   before :each do
-    @user_1 = User.create!(name: "User1", email: "email1@example.com")
-    @user_2 = User.create!(name: "User2", email: "email2@example.com")
-    @user_3 = User.create!(name: "User3", email: "email3@example.com")
+    @user_1 = User.create!(name: "User1", email: "email1@example.com", password: "password1")
+    @user_2 = User.create!(name: "User2", email: "email2@example.com", password: "password2")
+    @user_3 = User.create!(name: "User3", email: "email3@example.com", password: "password3")
   end
 
   describe 'happy path' do

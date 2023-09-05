@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Movie results page" do
   before do
-    @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com")
+    @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com", password: "password1")
   end
 
   describe "movie results page" do
