@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'New Viewing Party' do
   before :each do
-    @user_1 = User.create!(name: "User1", email: "email1@example.com")
+    @user_1 = User.create!(name: "User1", email: "email1@example.com", password: "password1")
   end
   describe 'happy path' do
     it 'can create a new viewing party', :vcr do
@@ -23,9 +23,9 @@ RSpec.describe 'New Viewing Party' do
     end
 
     it 'can invite other users to viewing party', :vcr do
-      @user_2 = User.create!(name: "User2", email: "email2@example.com")
-      @user_3 = User.create!(name: "User3", email: "email3@example.com")
-      @user_4 = User.create!(name: "User4", email: "email4@example.com")
+      @user_2 = User.create!(name: "User2", email: "email2@example.com", password: "password2")
+      @user_3 = User.create!(name: "User3", email: "email3@example.com", password: "password3")
+      @user_4 = User.create!(name: "User4", email: "email4@example.com", password: "password4")
       visit user_path(@user_1)
       expect(page).to_not have_content("Super Mega Ultra Party")
       expect(page).to_not have_content(@user_2.name)
