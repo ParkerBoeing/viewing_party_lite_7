@@ -37,7 +37,7 @@ RSpec.describe 'User welcome' do
       fill_in :password, with: @user_1.password
 
       click_on "Log In"
-     
+    
       expect(current_path).to eq(user_path(@user_1))
     end
   end

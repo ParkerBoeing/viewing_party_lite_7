@@ -4,5 +4,9 @@
   <ul> <%= link_to "#{user.name}", user_path(user) %></ul>
 <% end %>
 <p>-----------------------------------------</p>
+<% if current_user %>
+  <%= link_to "Log Out" %>
+<% else %>
 <p><%= link_to 'New User', "/register" %></p>
 <%= link_to "I already have an account", login_path %>
+<% end %>
