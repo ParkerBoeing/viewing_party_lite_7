@@ -72,7 +72,7 @@ RSpec.describe 'New User' do
       fill_in :user_confirm_password, with: "%ThisIsDefNotAPassWord%"
       click_button "Register"
 
-      expect(page).to have_content("User must have a name")
+      expect(page).to have_content("Name can't be blank")
       
       visit root_path
       expect(page).to_not have_content("Ralph")

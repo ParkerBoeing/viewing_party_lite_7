@@ -12,12 +12,17 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      flash[:success] = "Welcome, #{@user.name}!"
-      redirect_to user_path(@user)
+    if params[:user][:password] == params[:user][:confirm_password]
+      @user = User.new(user_params)
+      if @user.save
+        flash[:success] = "Welcome, #{@user.name}!"
+        redirect_to user_path(@user)
+      else
+        flash.now[:error] = @user.errors.full_messages.to_sentence
+        render 'new'
+      end
     else
-      flash.now[:error] = @user.errors.full_messages.to_sentence
+      flash.now[:error] = "Passwords do not match"
       render 'new'
     end
   end
