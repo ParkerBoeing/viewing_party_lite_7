@@ -27,5 +27,18 @@ RSpec.describe 'User welcome' do
       click_on 'Home'
       expect(current_path).to eq(root_path)
     end
+
+    it 'allows user to log in' do
+      visit root_path
+      click_on "I already have an account"
+      expect(current_path).to eq(login_path)
+
+      fill_in :email, with: @user_1.email
+      fill_in :password, with: @user_1.password
+
+      click_on "Log In"
+     
+      expect(current_path).to eq(user_path(@user_1))
+    end
   end
 end
