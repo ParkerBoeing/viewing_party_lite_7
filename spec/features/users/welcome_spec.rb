@@ -41,4 +41,19 @@ RSpec.describe 'User welcome' do
       expect(current_path).to eq(user_path(@user_1))
     end
   end
+
+  describe "sad path" do
+    it "warns for invalid credentials" do
+      visit root_path
+      click_on "I already have an account"
+      expect(current_path).to eq(login_path)
+
+      fill_in :email, with: ""
+      fill_in :password, with: @user_1.password
+
+      click_on "Log In"
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content("Sorry, your credentials are bad.")
+    end
+  end
 end
