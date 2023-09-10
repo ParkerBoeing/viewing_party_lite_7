@@ -10,6 +10,14 @@ RSpec.describe "User Dashboard" do
       @viewing_party3 = @user2.viewing_parties.create!(name: "Butch's Watch Polishing Party", movie_title: "Watches a Documentary", host: "Vincent", event_date: "2023-08-23", start_time: "3:00 AM" )
       @user1.viewing_parties << @viewing_party2
       @user1.viewing_parties << @viewing_party3
+      visit root_path
+      click_on "I already have an account"
+      expect(current_path).to eq(login_path)
+
+      fill_in :email, with: @user1.email
+      fill_in :password, with: @user1.password
+
+      click_on "Log In"
     end
 
     it "displays the users name at the top of the page" do
@@ -79,6 +87,14 @@ RSpec.describe "User Dashboard" do
       @user_2 = User.create!(name: "User2", email: "email2@example.com", password: "password2")
       @user_3 = User.create!(name: "User3", email: "email3@example.com", password: "password3")
       @user_4 = User.create!(name: "User4", email: "email4@example.com", password: "password4")
+      visit root_path
+      click_on "I already have an account"
+      expect(current_path).to eq(login_path)
+
+      fill_in :email, with: @user1.email
+      fill_in :password, with: @user1.password
+
+      click_on "Log In"
       visit user_path(@user1)
       expect(page).to_not have_selector("img[alt='Movie poster']")
       expect(page).to_not have_selector("img")

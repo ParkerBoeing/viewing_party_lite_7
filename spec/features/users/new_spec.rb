@@ -10,7 +10,7 @@ RSpec.describe 'New User' do
   describe 'happy path' do
     it 'can register a new user' do
       visit root_path
-      expect(page).to_not have_content("Ralph")
+      expect(page).to_not have_content("lol@yahoo.com")
       visit "/register"
 
       fill_in "Name", with: "Ralph"
@@ -23,7 +23,7 @@ RSpec.describe 'New User' do
       expect(page).to have_content("Welcome, Ralph!")
       
       visit root_path
-      expect(page).to have_content("Ralph")
+      expect(page).to have_content("lol@yahoo.com")
     end
   end
 

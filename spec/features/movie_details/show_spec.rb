@@ -3,6 +3,14 @@ require 'rails_helper'
 RSpec.describe "Movie details page" do
   before do
     @user1 = User.create!(name: "Marvin", email: "Marvin@gmail.com", password: "password1")
+    visit root_path
+    click_on "I already have an account"
+    expect(current_path).to eq(login_path)
+
+    fill_in :email, with: @user1.email
+    fill_in :password, with: @user1.password
+
+    click_on "Log In"
   end
 
   describe "movie details page" do
