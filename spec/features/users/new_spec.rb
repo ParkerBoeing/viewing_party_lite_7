@@ -10,20 +10,20 @@ RSpec.describe 'New User' do
   describe 'happy path' do
     it 'can register a new user' do
       visit root_path
-      expect(page).to_not have_content("Ralph")
+      expect(page).to_not have_content("lol@yahoo.com")
       visit "/register"
 
       fill_in "Name", with: "Ralph"
       fill_in "Email", with: "lol@yahoo.com"
       fill_in :user_password, with: "%ThisIsDefNotAPassWord%"
-      fill_in :user_confirm_password, with: "%ThisIsDefNotAPassWord%"
+      fill_in :user_password_confirmation, with: "%ThisIsDefNotAPassWord%"
       click_button "Register"
       new_user = User.find_by(email: "lol@yahoo.com")
       expect(current_path).to eq(user_path(new_user))
       expect(page).to have_content("Welcome, Ralph!")
       
       visit root_path
-      expect(page).to have_content("Ralph")
+      expect(page).to have_content("lol@yahoo.com")
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe 'New User' do
       fill_in "Name", with: "Ralph"
       fill_in "Email", with: "email2@example.com"
       fill_in :user_password, with: "%ThisIsDefNotAPassWord%"
-      fill_in :user_confirm_password, with: "%ThisIsDefNotAPassWord%"
+      fill_in :user_password_confirmation, with: "%ThisIsDefNotAPassWord%"
       click_button "Register"
 
       expect(page).to have_content("Email has already been taken")
@@ -53,10 +53,10 @@ RSpec.describe 'New User' do
       fill_in "Name", with: "Ralph"
       fill_in "Email", with: "email2@example.com"
       fill_in :user_password, with: "%ThisIsDefNotAPassWord%"
-      fill_in :user_confirm_password, with: "%ThisIsDefAPassWord%"
+      fill_in :user_password_confirmation, with: "%ThisIsDefAPassWord%"
       click_button "Register"
 
-      expect(page).to have_content("Passwords do not match")
+      expect(page).to have_content("Password confirmation doesn't match Password")
       
       visit root_path
       expect(page).to_not have_content("Ralph")
@@ -70,7 +70,7 @@ RSpec.describe 'New User' do
       fill_in "Name", with: ""
       fill_in "Email", with: "email2@example.com"
       fill_in :user_password, with: "%ThisIsDefNotAPassWord%"
-      fill_in :user_confirm_password, with: "%ThisIsDefNotAPassWord%"
+      fill_in :user_password_confirmation, with: "%ThisIsDefNotAPassWord%"
       click_button "Register"
 
       expect(page).to have_content("Name can't be blank")
@@ -87,7 +87,7 @@ RSpec.describe 'New User' do
       fill_in "Name", with: "Fuddy Dudkins"
       fill_in "Email", with: "email2@example.com"
       fill_in :user_password, with: ""
-      fill_in :user_confirm_password, with: ""
+      fill_in :user_password_confirmation, with: ""
       click_button "Register"
 
       expect(page).to have_content("Password can't be blank")

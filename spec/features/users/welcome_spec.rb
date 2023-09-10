@@ -12,18 +12,10 @@ RSpec.describe 'User welcome' do
       visit root_path
       
       expect(page).to have_content("Viewing Party")
-      expect(page).to have_content(@user_1.name)
-      expect(page).to have_content(@user_2.name)
-      expect(page).to have_content(@user_3.name)
       expect(page).to have_link("Home")
 
       click_on 'New User'
       expect(current_path).to eq("/register")
-      click_on 'Home'
-      expect(current_path).to eq(root_path)
-
-      click_on @user_2.name
-      expect(current_path).to eq(user_path(@user_2))
       click_on 'Home'
       expect(current_path).to eq(root_path)
     end
@@ -39,6 +31,44 @@ RSpec.describe 'User welcome' do
       click_on "Log In"
     
       expect(current_path).to eq(user_path(@user_1))
+      visit root_path
+
+      expect(page).to_not have_content("Log In")
+      expect(page).to have_content("Log Out")
+    end
+
+    it 'allows user to log out' do
+      visit root_path
+      click_on "I already have an account"
+      expect(current_path).to eq(login_path)
+
+      fill_in :email, with: @user_1.email
+      fill_in :password, with: @user_1.password
+
+      click_on "Log In"
+    
+      expect(current_path).to eq(user_path(@user_1))
+      visit root_path
+      click_on "Log Out"
+      expect(page).to have_content("I already have an account")
+      expect(page).to have_content("You have successfully logged out.")
+      expect(page).to_not have_content("Log Out")
+    end
+
+    it 'displays proper logic based on visitor / current user' do
+      visit root_path
+      expect(page).to_not have_content("#{@user_2.email}")
+      click_on "I already have an account"
+      expect(current_path).to eq(login_path)
+
+      fill_in :email, with: @user_1.email
+      fill_in :password, with: @user_1.password
+
+      click_on "Log In"
+    
+      expect(current_path).to eq(user_path(@user_1))
+      visit root_path
+      expect(page).to have_content("#{@user_2.email}")
     end
   end
 
@@ -54,6 +84,12 @@ RSpec.describe 'User welcome' do
       click_on "Log In"
       expect(current_path).to eq(login_path)
       expect(page).to have_content("Sorry, your credentials are bad.")
+    end
+
+    it "denies access if not logged in" do
+      visit user_path(@user_1)
+      expect(current_path).to eq(root_path)
+      expect(page).to have_content("You must be logged in or registered to access the dashboard.")
     end
   end
 end
