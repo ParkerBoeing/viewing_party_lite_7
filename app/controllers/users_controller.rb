@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:show]
   def show
     @user = User.find(params[:id])
   end
@@ -12,17 +13,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    if params[:user][:password] == params[:user][:confirm_password]
-      @user = User.new(user_params)
-      if @user.save
-        flash[:success] = "Welcome, #{@user.name}!"
-        redirect_to user_path(@user)
-      else
-        flash.now[:error] = @user.errors.full_messages.to_sentence
-        render 'new'
-      end
+    @user = User.new(user_params)
+    if @user.save
+      flash[:success] = "Welcome, #{@user.name}!"
+      session[:user_id] = @user.id
+      redirect_to user_path(@user)
     else
-      flash.now[:error] = "Passwords do not match"
+      flash.now[:error] = @user.errors.full_messages.to_sentence
       render 'new'
     end
   end
@@ -47,8 +44,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    session[:user_id] = nil
+    flash[:notice] = 'You have successfully logged out.'
+    redirect_to root_path
+  end
+
   private
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in or registered to access the dashboard."
+      redirect_to root_path
+    end
+  end
+
+  def logged_in?
+    session[:user_id]
   end
 end

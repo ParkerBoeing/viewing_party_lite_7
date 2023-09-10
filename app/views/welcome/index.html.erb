@@ -1,12 +1,14 @@
 <h3>Users</h3>
 
-<% @users.each do |user| %>
-  <ul> <%= link_to "#{user.name}", user_path(user) %></ul>
-<% end %>
-<p>-----------------------------------------</p>
 <% if current_user %>
-  <%= link_to "Log Out" %>
+  <% @users.each do |user| %>
+    <ul> <%= user.email %></ul>
+  <% end %>
+  <p>-----------------------------------------</p>
+  <%= link_to "Log Out", logout_path %>
 <% else %>
 <p><%= link_to 'New User', "/register" %></p>
 <%= link_to "I already have an account", login_path %>
 <% end %>
+
+
